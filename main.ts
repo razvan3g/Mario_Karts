@@ -18,6 +18,13 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . f f . . . . . . f f . . 
         `)
 })
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (sprMariosKart) {
+        info.startCountdown(5)
+        controller.moveSprite(sprMariosKart, 300, 300)
+        sprMariosKart.startEffect(effects.fire)
+    }
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     sprMariosKart.setImage(img`
         . . . . . . . . . . . . . . . . 
@@ -37,6 +44,10 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . f f f f . . . . f f f . 
         . . . . . . . . . . . . . . . . 
         `)
+})
+info.onCountdownEnd(function () {
+    controller.moveSprite(sprMariosKart, 150, 150)
+    effects.clearParticles(sprMariosKart)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     sprMariosKart.setImage(img`
@@ -206,7 +217,7 @@ function initMario () {
         `, SpriteKind.Player)
     tiles.placeOnTile(sprMariosKart, tiles.getTileLocation(0, 28))
     scene.cameraFollowSprite(sprMariosKart)
-    controller.moveSprite(sprMariosKart)
+    controller.moveSprite(sprMariosKart, 150, 150)
 }
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     sprMariosKart.setImage(img`
@@ -228,5 +239,26 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . 8 6 6 6 6 6 6 8 . . . 
         `)
 })
+function initNisip () {
+    nisip = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Player)
+}
+let nisip: Sprite = null
 let sprMariosKart: Sprite = null
 initGame()
